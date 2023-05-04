@@ -16,11 +16,6 @@ provider:
     PROJECT_ID: ${file(config.json):PROJECT_ID}
     CALENDAR_ID: ${file(config.json):CALENDAR_ID}
 
-
-functions:
-  hello:
-    handler: handler.hello
-
   getAuthURL:
     handler: handler.getAuthURL
     events:
