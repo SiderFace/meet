@@ -12,7 +12,7 @@ export const getAccessToken = async () => {
       const code = await searchParams.get("code");
       if (!code) {
          const results = await axios.get(
-         "https://8e2dbuybk7.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
+         "https://ngo6govs7h.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
          );
          const { authUrl } = results.data;
          return (window.location.href = authUrl);
@@ -44,7 +44,7 @@ export const getEvents = async () => {
 
    if (token) {
       removeQuery();
-      const url = 'https://8e2dbuybk7.execute-api.us-east-2.amazonaws.com/dev/api/get-events' + '/' + token;
+      const url = 'https://ngo6govs7h.execute-api.us-east-2.amazonaws.com/dev/api/get-events' + '/' + token;
       const result = await axios.get(url);
       if (result.data) {
          var locations = extractLocations(result.data.events);
@@ -73,7 +73,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
    const encodeCode = encodeURIComponent(code);
    const { access_token } = await fetch(
-     'https://8e2dbuybk7.execute-api.us-east-2.amazonaws.com/dev/api/api/token' + '/' + encodeCode
+     'https://ngo6govs7h.execute-api.us-east-2.amazonaws.com/dev/api/api/token' + '/' + encodeCode
    )
      .then((res) => {
        return res.json();
@@ -88,5 +88,6 @@ const getToken = async (code) => {
 export const extractLocations = (events) => {
    var extractLocations = events.map((event) => event.location);
    var locations = [...new Set(extractLocations)];
+   
    return locations;
 };
