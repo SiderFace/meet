@@ -1,4 +1,4 @@
-Servlerless (Lambda) usage :
+Serverless (Lambda) usage :
 
 - Frontend: Written with JavaScript/React; hosted on GitHub Pages.
 - Backend (Server Logic): Written with Node/Express as Lambda functions (FaaS); hosted on AWS (requests come from frontend to Lambda function to data).
