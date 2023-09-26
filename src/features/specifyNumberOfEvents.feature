@@ -1,9 +1,9 @@
 Feature: Specify number of events
 
-Scenario: When user hasn’t specified a number, 32 is the default number.
+Scenario: When user hasn’t specified a number, 1 is the default number.
    Given A list of events was loaded
    When The list is dispalyed to the user with default settings
-   Then The list will display 32 events unless directed to show more
+   Then The list will display 1 event unless directed to show more
 
 Scenario: User can change the number of events they want to see.
    Given A list of events was loaded

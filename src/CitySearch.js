@@ -19,16 +19,24 @@ class CitySearch extends Component {
    }
 
    handleItemClicked = (suggestion) => {
-      this.setState({
-         query: suggestion,
-         showSuggestions: false
-      }); 
-      this.props.updateEvents(suggestion);
-   }
+      if (suggestion === "all") {
+        this.setState({
+          query: "all",
+          showSuggestions: false,
+        });
+        this.props.updateEvents("all");
+      } else {
+        this.setState({
+          query: suggestion,
+          showSuggestions: false,
+        });
+        this.props.updateEvents(suggestion);
+      }
+    };
 
    render() {
       return (
-         <div className="CitySearch">
+         <div className="CitySearch" id="city-search">
             <input
                type="text"
                className="city"

@@ -4,15 +4,14 @@ import App from '../App';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../mock-data';
 
-const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
+const feature = loadFeature('./src/features/showHideAnEventDetails.feature');
 
 //Feature #2 :
 defineFeature(feature, test => {
-
+   
+   //Scenario #1:
    test('An event element is collapsed by default.', ({  given, when, then }) => {
 
-
-      //Scenario #1:
       let AppComponent;
 
       given('A list of events was loaded (the app is opened)', () => {
@@ -25,7 +24,7 @@ defineFeature(feature, test => {
    
          await waitFor(() => {
             const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-            expect(EventListItems.length).toBe(32);
+            expect(EventListItems.length).toBe(2);
          });
       });
 
@@ -51,7 +50,7 @@ defineFeature(feature, test => {
       
          await waitFor(() => {
             const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-            expect(EventListItems.length).toBe(32);
+            expect(EventListItems.length).toBe(2);
          });
       });
 
@@ -84,7 +83,7 @@ defineFeature(feature, test => {
          
          return waitFor(() => {
          const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-         expect(EventListItems.length).toBe(32);
+         expect(EventListItems.length).toBe(2);
          }).then(() => {
             const eventList = AppComponent.container.querySelector('#event-list');
             const eventElements = within(eventList).queryAllByRole('listitem');

@@ -32,7 +32,7 @@ class App extends Component {
             location === "all"
               ? events
               : events.filter((event) => event.location === location);
-          const shownEvents = locationEvents.slice(0, this.state.eventCount);
+          const shownEvents = locationEvents.slice(0, eventCount);
           this.setState({
             events: shownEvents,
             selectedCity: location,
@@ -47,15 +47,16 @@ class App extends Component {
           this.setState({
             events: shownEvents,
             eventCount: eventCount,
+            selectedCity: "all", 
           });
         });
-      } else if (this.state.selectedCity === "all") {
+      } else if (location === "all") { 
         getEvents().then((events) => {
-          const locationEvents = events;
-          const shownEvents = locationEvents.slice(0, eventCount);
+          const shownEvents = events.slice(0, eventCount);
           this.setState({
             events: shownEvents,
             eventCount: eventCount,
+            selectedCity: "all", 
           });
         });
       } else {
@@ -70,6 +71,7 @@ class App extends Component {
           this.setState({
             events: shownEvents,
             eventCount: eventCount,
+            selectedCity: location,
           });
         });
       }
@@ -78,20 +80,22 @@ class App extends Component {
 
    render() {
       return (
-      <div className="App">
-         <CitySearch 
-            locations={this.state.locations} 
-            updateEvents={this.updateEvents} 
+         <div className="App">
+            <CitySearch 
+               locations={this.state.locations} 
+               updateEvents={this.updateEvents} 
+            />
+            <EventList
+               data-testid="event-list" 
+               events={this.state.events} 
+            />
+            <NumberOfEvents
+               data-testid="event-list"
+               selectedCity={this.state.selectedCity}
+               query={this.state.eventCount}
+               updateEvents={this.updateEvents}
          />
-         <EventList 
-            events={this.state.events} 
-         />
-         <NumberOfEvents
-            selectedCity={this.state.selectedCity}
-            query={this.state.eventCount}
-            updateEvents={this.updateEvents}
-        />
-      </div>
+         </div>
       );
    }
 }

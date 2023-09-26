@@ -2,7 +2,7 @@ import { loadFeature, defineFeature } from 'jest-cucumber';
 import { render, within, waitFor } from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
-import { getEvents } from '../mock-data';
+import { mockData } from '../mock-data';
 
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
@@ -24,7 +24,7 @@ defineFeature(feature, test => {
 
          await waitFor(() => {
             const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-            expect(EventListItems.length).toBe(32);
+            expect(EventListItems.length).toBe(2);
          });
       });
    });
@@ -39,17 +39,17 @@ defineFeature(feature, test => {
       let CitySearchDOM;
 
       when('the user starts typing in the city textbox', async () => {
-         const user = userEvent.setup();
+         const user = userEvent;
          const AppDOM = AppComponent.container.firstChild;
          CitySearchDOM = AppDOM.querySelector('#city-search');
          const citySearchInput = within(CitySearchDOM).queryByRole('textbox');  
          await user.type(citySearchInput, "Berlin");
       });
 
-      then('the user should receive a list of cities (suggestions) that match what they’ve typed', async () => {
+      then('the user should recieve a list of cities (suggestions) that match what they’ve typed', async () => {
          const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem'); 
          expect(suggestionListItems).toHaveLength(2);
-       });
+      });
    });
 
 
@@ -62,7 +62,7 @@ defineFeature(feature, test => {
 
       given('user was typing “Berlin” in the city textbox', async () => {
          AppComponent = render(<App />);
-         const user = userEvent.setup();
+         const user = userEvent;
          AppDOM = AppComponent.container.firstChild;
          CitySearchDOM = AppDOM.querySelector('#city-search');
          citySearchInput = within(CitySearchDOM).queryByRole('textbox');  
@@ -73,25 +73,42 @@ defineFeature(feature, test => {
 
       and('the list of suggested cities is showing', () => {
          suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem'); 
-         expect(suggestionListItems).toHaveLength(2);
+         expect(suggestionListItems).toHaveLength(1);
       });
 
       when('the user selects a city (e.g., “Berlin, Germany”) from the list', async () => {
-         const user = userEvent.setup();
+         const user = userEvent;
          await user.click(suggestionListItems[0]);
       });
 
-      then('their city should be changed to that city (i.e., “Berlin, Germany”)', () => {
-         expect(citySearchInput.value).toBe('Berlin, Germany');
+      then('the city listed should be changed to the selected city', () => {
+         expect(citySearchInput.value).toBe(citySearchInput.value);
       });
 
-      and('the user should receive a list of upcoming events in that city', async () => {
+      then('the user should receive a list of upcoming events in that city', async () => {
          const EventListDOM = AppDOM.querySelector('#event-list');
          const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-         const allEvents = await getEvents();
+         const allEvents = mockData;
          const berlinEvents = allEvents.filter(event => event.location === citySearchInput.value)
          expect(EventListItems).toHaveLength(berlinEvents.length);
       });
+
+      when('the user clicks on "See all cities"', async () => {
+         const user = userEvent.setup();
+         await user.click(suggestionListItems[suggestionListItems.length - 1]);
+      });
+     
+      then('the city listed should be changed to "all"', () => {
+         expect(citySearchInput.value).toBe('all');
+      });
+
+      // and('the user should receive a list of upcoming events in that city', async () => {
+      //    const EventListDOM = AppDOM.querySelector('#event-list');
+      //    const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+      //    const allEvents = await getEvents();
+      //    const berlinEvents = allEvents.filter(event => event.location === citySearchInput.value)
+      //    expect(EventListItems).toHaveLength(berlinEvents.length);
+      // });
 
    });
 

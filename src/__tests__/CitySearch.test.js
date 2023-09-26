@@ -53,7 +53,7 @@ describe('<CitySearch /> component', () => {
         return location.toUpperCase().indexOf(query.toUpperCase()) > -1;
       } );
       expect(CitySearchWrapper.state("suggestions")).toEqual(filteredLocations);
-    });
+   });
 
    test('selecting a suggestion should change query state', () => {
       CitySearchWrapper.setState({ query: "Berlin"  });

@@ -1,13 +1,21 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import NumberOfEvents from "../NumberOfEvents";
 
 describe("<NumberOfEvents/> component", () => {
    
    let NumberOfEventsWrapper;
+   const updateEvents = jest.fn();
+
    beforeAll(() => {
-      NumberOfEventsWrapper = shallow(<NumberOfEvents />);
-   } );
+      NumberOfEventsWrapper = mount(
+         <NumberOfEvents 
+            selectedCity="someCity"
+            query={32}
+            updateEvents={updateEvents}
+         />
+      );
+   });
 
    test("Default input is 1", () => {
       expect(NumberOfEventsWrapper.state("query")).toBe(1);
