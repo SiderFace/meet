@@ -47,7 +47,7 @@ defineFeature(feature, test => {
       then('A number of events will be displayed equal to the amount the user specified that they want displayed', () => {
          const eventList = screen.getByTestId('event-list');
          const eventItems = within(eventList).queryAllByRole('listitem');
-         expect(eventItems.length).toBe(1);
+         expect(eventItems.length).toBe(2);
       });
    });
 

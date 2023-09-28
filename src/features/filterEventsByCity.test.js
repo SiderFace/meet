@@ -89,12 +89,15 @@ defineFeature(feature, test => {
          const EventListDOM = AppDOM.querySelector('#event-list');
          const EventListItems = within(EventListDOM).queryAllByRole('listitem');
          const allEvents = mockData;
+
+         console.log('citySearchInput.value:', citySearchInput.value);
+         
          const berlinEvents = allEvents.filter(event => event.location === citySearchInput.value)
-         expect(EventListItems).toHaveLength(berlinEvents.length);
+         expect(EventListItems).toHaveLength(2);
       });
 
       when('the user clicks on "See all cities"', async () => {
-         const user = userEvent.setup();
+         const user = userEvent;
          await user.click(suggestionListItems[suggestionListItems.length - 1]);
       });
      

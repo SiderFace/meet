@@ -8,7 +8,7 @@ const feature = loadFeature('./src/features/showHideAnEventDetails.feature');
 
 //Feature #2 :
 defineFeature(feature, test => {
-   
+
    //Scenario #1:
    test('An event element is collapsed by default.', ({  given, when, then }) => {
 
@@ -59,8 +59,8 @@ defineFeature(feature, test => {
       when('The user clicks the "show details" button (the button to expand event details)', async () => {
          const eventList = AppComponent.container.querySelector('#event-list');
          const eventElements = within(eventList).queryAllByRole('listitem');
-         const expandButton = within(eventElements[0]).queryByTestId('expand-button');
-         userEvent.click(expandButton);
+         const expandButton = AppComponent.queryAllByText('show details')[0];
+         await userEvent.click(expandButton);
          expandedEventElement = eventElements[0];      
       });
 
@@ -87,7 +87,7 @@ defineFeature(feature, test => {
          }).then(() => {
             const eventList = AppComponent.container.querySelector('#event-list');
             const eventElements = within(eventList).queryAllByRole('listitem');
-            const expandButton = within(eventElements[0]).queryByTestId('expand-button');
+            const expandButton = AppComponent.queryAllByText('show details')[0];
             userEvent.click(expandButton);
             expandedEventElement = eventElements[0];
          });
@@ -97,7 +97,7 @@ defineFeature(feature, test => {
             throw new Error('Expanded event element is not defined');
          }
 
-         const hideDetailsButton = within(expandedEventElement).queryByTestId('hide-details-button');
+         const hideDetailsButton = AppComponent.queryAllByText('hide details')[0];
          userEvent.click(hideDetailsButton);
       });
 
