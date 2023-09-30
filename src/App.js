@@ -5,14 +5,36 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from './api';
+import { InfoAlert } from './Alert';
+
+// const App = () => {
+//    const [allLocations, setAllLocations] = useState([]);
+//    const [currentNOE, setCurrentNOE] = useState(32);
+//    const [events, setEvents] = useState([]);
+//    const [currentCity, setCurrentCity] = useState("See all cities");
+//    const [infoAlert, setInfoAlert] = useState("");
+
+// class App extends Component {
+//    state = {
+//      events: [],
+//      locations: [],
+//      numberOfEvents: 32
+//    }
 
 class App extends Component {
    state = {
-     events: [],
-     locations: [],
-     numberOfEvents: 32
-   }
+      events: [],
+      locations: [],
+      eventCount: 32,
+      selectedCity: null,
+      infoAlert: "",
+      // setInfoAlert: "",
+   };
 
+   setInfoAlert = (text) => {
+      this.setState({ infoAlert: text });
+   };
+   
    componentDidMount() {
       this.mounted = true;
       getEvents().then((events) => {
@@ -79,11 +101,16 @@ class App extends Component {
   
 
    render() {
+      const { infoAlert } = this.state;
       return (
          <div className="App">
+            <div className="alerts-container">
+               {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
+            </div>
             <CitySearch 
                locations={this.state.locations} 
-               updateEvents={this.updateEvents} 
+               updateEvents={this.updateEvents}
+               setInfoAlert={this.setInfoAlert} 
             />
             <EventList
                data-testid="event-list" 
