@@ -5,7 +5,7 @@ import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from './api';
-import { InfoAlert } from './Alert';
+import { InfoAlert, WarningAlert } from './Alert';
 
 // const App = () => {
 //    const [allLocations, setAllLocations] = useState([]);
@@ -96,6 +96,17 @@ class App extends Component {
                selectedCity: location,
             });
          });
+
+         if (!navigator.onLine) {
+            this.setState({
+              warningText: 'You are currently offline. Events have not been updated since last online.'
+            });
+          }
+          else {
+            this.setState({
+              warningText: ''
+            });
+         }
       }
    };
   
@@ -121,7 +132,8 @@ class App extends Component {
                selectedCity={this.state.selectedCity}
                query={this.state.eventCount}
                updateEvents={this.updateEvents}
-         />
+            />
+            <WarningAlert text={this.state.warningText} />
          </div>
       );
    }
