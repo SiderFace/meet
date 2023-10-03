@@ -4,6 +4,8 @@ import './nprogress.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from "./NumberOfEvents";
+import CityEventsChart from "./CityEventsChart";
+import EventGenresChart from "./EventGenresChart";
 import { getEvents, extractLocations } from './api';
 import { InfoAlert, WarningAlert } from './Alert';
 
@@ -118,20 +120,30 @@ class App extends Component {
             <div className="alerts-container">
                {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
             </div>
+            
             <CitySearch 
                locations={this.state.locations} 
                updateEvents={this.updateEvents}
                setInfoAlert={this.setInfoAlert} 
-            />
-            <EventList
-               data-testid="event-list" 
-               events={this.state.events} 
-            />
+            />           
             <NumberOfEvents
                data-testid="event-list"
                selectedCity={this.state.selectedCity}
                query={this.state.eventCount}
                updateEvents={this.updateEvents}
+            />
+            <div className="charts-container">
+               <EventGenresChart 
+                  events={this.state.events} 
+               />
+               <CityEventsChart 
+                  allLocations={this.state.locations} 
+                  events={this.state.events} 
+               />
+            </div>
+            <EventList
+               data-testid="event-list" 
+               events={this.state.events} 
             />
             <WarningAlert text={this.state.warningText} />
          </div>

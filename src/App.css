@@ -213,8 +213,14 @@ input[type="number"] {
   }
   .data-vis-wrapper .recharts-responsive-container {
     flex-basis: 50%;
-    max-width: 50%;
-    min-width: auto;
+    /* max-width: 50%;
+    min-width: auto; */
     margin: 0 auto;
   }
 }
+
+.charts-container {
+   display: flex; 
+   justify-content: space-between; 
+   
+ }
